@@ -1,45 +1,79 @@
 from tkinter import *
+import tkinter as tk
+decks = input("how many decks are being played: ")
 
-def btnClick(numbers): 
+
+
+def btnClick(numbers):
     start = txtDisplay.get()
     global f_num
     f_num = int(start)
     txtDisplay.delete(0, END)
     txtDisplay.insert(0, f_num + int(numbers))
+
 def butClick(number):
     global operator
-    operator = operator + str(number)
+    operator = operator
     text_Input.set(operator)
+    deckcounter.set(operator)
 
 def btnClearDisplay():
     txtDisplay.delete(0, END)
+    countDisplay.delete(0, END)
 
-def btncount(number):
+def btncount(numbers):
     countstart = countDisplay.get()
     global ctstart
     ctstart = int(countstart)
     countDisplay.delete(0, END)
-    countDisplay.insert(0, ctstart + int(number))
+    countDisplay.insert(0, ctstart + int(numbers))
+
+
+def tbtncount(numberss):
+    tcountstart = trueCountDisplay.get()
+    global tcount
+    tcount = (round(f_num/(int(decks)-1)))
+    trueCountDisplay.delete(0, END)
+    trueCountDisplay.insert(0, tcount)
+
+
 
 F = "F"
 cal = Tk()
 cal.title("card counter")
-
-
 operator = ""
 text_Input = StringVar()
 deckcounter = StringVar()
+truecount = StringVar()
 f_num=int(0)
 ctstart=int(0)
+tcount=int(0)
 one = int(1)
 zero = int(0)
 minusone = int(-1)
+operator=0
+
+if ctstart <= 52:
+    decks = decks
+if ctstart > 52 and ctstart <= 104:
+    decks = decks -1
+if ctstart > 104 and ctstart <=156:
+    decks = decks - 2
+if ctstart > 156 and ctstart <= 208:
+    decks = decks -3
+if ctstart > 208 and ctstart <= 260:
+    decks = decks -4
+if ctstart > 260 and ctstart <= 312:
+    decks = decks -5
+if ctstart > 312 and ctstart <= 364:
+    decks = decks -6
+
 
 def o_and_t(number):
     global operator
     btnClick(number)
     btncount(one)
-
+    #tbtnCounter(number)
 
 txtDisplay = Entry(cal, textvariable=text_Input, width=80)
 txtDisplay.grid(row=0, column=0, columnspan=5)
@@ -64,21 +98,30 @@ btn8 = Button(cal, padx=16, bd=5, fg="black", font=('ariel', 15, 'bold'),
 btn9 = Button(cal, padx=16, bd=5, fg="black", font=('ariel', 15, 'bold'),
               text="9", command=lambda: o_and_t(zero)).grid(row=4, column=2)
 btn0 = Button(cal, padx=16, bd=5, fg="black", font=('ariel', 15, 'bold'),
-              text="0", command=lambda: o_and_t(zero)).grid(row=5, column=0)
-btnreset = Button(cal, padx=16, bd=5, fg="black", font=('ariel', 15, 'bold'),
-                  text="reset", command=lambda: btnClearDisplay()).grid(row=5, column=1)
+              text="RESET", command=lambda:butClick(zero)).grid(row=5, column=0)
 
-countDisplay = Entry(cal, textvariable=deckcounter, width=80)
+
+
+countDisplay = Entry(cal, textvariable=deckcounter, width=50)
 countDisplay.grid(row=7, column=0, columnspan=5)
 countDisplay.insert(0, ctstart)
+trueCountDisplay = Entry(cal, textvariable=truecount, width=50)
+trueCountDisplay.grid(row=9, column=0, columnspan=5)
+trueCountDisplay.insert(0, tcount)
+tbtnCounter = Button(cal, padx=16, bd=5, fg="black", font=('ariel', 15, 'bold'),
+              text="True Count", command=lambda:tbtncount(tcount)).grid(row=10, column=1)
 
 
+root = tk.Tk()
+S = tk.Scrollbar(root)
+T = tk.Text(root, height=4, width=50)
+S.pack(side=tk.RIGHT, fill=tk.Y)
+T.pack(side=tk.LEFT, fill=tk.Y)
+S.config(command=T.yview)
+T.config(yscrollcommand=S.set)
+quote = "Instructions:"
 
-
-
-
-
-
+T.insert(tk.END, quote)
 
 
 cal.mainloop()
